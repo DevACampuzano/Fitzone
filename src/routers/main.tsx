@@ -5,13 +5,15 @@ import {
 } from '@react-navigation/bottom-tabs';
 import { ParamListBase, RouteProp } from '@react-navigation/native';
 import { Home } from '../screens';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export type TabNavigatorMainScreenProps<S extends keyof TabBarScreenMain> =
   BottomTabScreenProps<TabBarScreenMain, S>;
 
 const Tab = createBottomTabNavigator<TabBarScreenMain>();
 
-export const TabNavigatorMain = (_: AppRouterScreenProps<'Main'>) => {
+export const TabNavigatorMain = () => {
+  const { bottom: paddingBottom } = useSafeAreaInsets();
   const tabBarIcon = (
     { color, size, focused }: TabBarIconProps,
     route: RouteProp<ParamListBase, string>,
@@ -40,9 +42,8 @@ export const TabNavigatorMain = (_: AppRouterScreenProps<'Main'>) => {
           backgroundColor: '#FFFFFF',
           borderTopWidth: 1,
           borderTopColor: '#E5E5EA',
-          paddingBottom: 5,
-          paddingTop: 5,
-          height: 60,
+          paddingVertical: 10,
+          paddingBottom: paddingBottom,
         },
         headerShown: false,
       })}

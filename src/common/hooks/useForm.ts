@@ -82,9 +82,10 @@ export const useForm = <T extends object>(
     if (!validator) {
       throw new Error('To use this feature you need the validators.');
     }
+
     const v = validator[value]?.validate as RegExp;
-    console.log('Validating', value, v);
     const result = !v.test(state[value] as string);
+
     if (result) {
       setErrors({
         ...errors,
@@ -113,7 +114,9 @@ export const useForm = <T extends object>(
 
   const handleBlur = (field: keyof T) => {
     setTouched(prev => ({ ...prev, [field]: true }));
-    if (validator && validator[field]) validateFieldsText(field);
+    if (validator && validator[field]) {
+      return validateFieldsText(field);
+    }
   };
 
   if (validator && !isValidRegExpObject(validator)) {

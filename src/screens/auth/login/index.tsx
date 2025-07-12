@@ -99,7 +99,12 @@ export const Login: React.FC<AppRouterScreenProps<'Login'>> = ({
                 styles.loginButton,
                 isLoading && styles.loginButtonDisabled,
               ]}
-              onPress={handleLogin}
+              onPress={() =>
+                handleLogin({
+                  email,
+                  password,
+                })
+              }
               disabled={isLoading}
               activeOpacity={0.7}
             >

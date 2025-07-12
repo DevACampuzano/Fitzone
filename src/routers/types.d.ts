@@ -14,7 +14,6 @@ type TabBarScreenMain = {
 type AppRouterScreen = {
   Login: undefined;
   Register: undefined;
-  Main: undefined;
   ClassDetail: undefined;
 };
 

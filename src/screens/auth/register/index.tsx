@@ -33,7 +33,7 @@ export const Register: React.FC<AppRouterScreenProps<'Register'>> = ({
     onChange,
     handleTermsChange,
     handleRegister,
-  } = useRegister();
+  } = useRegister({ navigation });
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
@@ -80,9 +80,9 @@ export const Register: React.FC<AppRouterScreenProps<'Register'>> = ({
                   <TextInput
                     style={styles.input}
                     placeholder="Nombre"
-                    value={formData.firstName}
-                    onChangeText={value => onChange('firstName', value)}
-                    onBlur={() => handleBlur('firstName')}
+                    value={formData.name}
+                    onChangeText={value => onChange('name', value)}
+                    onBlur={() => handleBlur('name')}
                     autoCapitalize="words"
                     autoCorrect={false}
                   />
@@ -105,11 +105,11 @@ export const Register: React.FC<AppRouterScreenProps<'Register'>> = ({
                   />
                 </View>
               </View>
-              {(touched.firstName && errors?.firstName) ||
+              {(touched.name && errors?.name) ||
               (touched.lastName && errors?.lastName) ? (
                 <View style={styles.errorRow}>
                   <Text style={[styles.errorText, styles.halfWidth]}>
-                    {touched.firstName ? errors?.firstName : ''}
+                    {touched.name ? errors?.name : ''}
                   </Text>
                   <Text style={[styles.errorText, styles.halfWidth]}>
                     {touched.lastName ? errors?.lastName : ''}
@@ -175,6 +175,7 @@ export const Register: React.FC<AppRouterScreenProps<'Register'>> = ({
                   onBlur={() => handleBlur('password')}
                   secureTextEntry={!showPassword}
                   autoCapitalize="none"
+                  keyboardType="visible-password"
                 />
                 <TouchableOpacity
                   style={styles.eyeButton}
@@ -206,6 +207,7 @@ export const Register: React.FC<AppRouterScreenProps<'Register'>> = ({
                   onBlur={() => handleBlur('confirmPassword')}
                   secureTextEntry={!showConfirmPassword}
                   autoCapitalize="none"
+                  keyboardType="visible-password"
                 />
                 <TouchableOpacity
                   style={styles.eyeButton}
@@ -258,9 +260,12 @@ export const Register: React.FC<AppRouterScreenProps<'Register'>> = ({
                 style={[
                   styles.registerButton,
                   isLoading && styles.registerButtonDisabled,
+                  {
+                    opacity: isLoading || acceptTerms === false ? 0.6 : 1,
+                  },
                 ]}
-                onPress={handleRegister}
-                disabled={isLoading}
+                onPress={() => handleRegister(formData)}
+                disabled={isLoading || acceptTerms === false}
                 activeOpacity={0.7}
               >
                 <Text style={styles.registerButtonText}>
