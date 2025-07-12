@@ -1,28 +1,23 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
+import { NavigationContainer } from '@react-navigation/native';
+import { AppRouter } from './src/routers';
+import type { PropsWithChildren } from 'react';
+import { TansStackProvider } from './src/common/store/TansStack';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
-import { NewAppScreen } from '@react-native/new-app-screen';
-import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
+const AppState: React.FC<PropsWithChildren> = ({ children }) => (
+  <TansStackProvider>
+    <NavigationContainer>
+      <SafeAreaProvider>{children}</SafeAreaProvider>
+    </NavigationContainer>
+  </TansStackProvider>
+);
 
 function App() {
-  const isDarkMode = useColorScheme() === 'dark';
-
   return (
-    <View style={styles.container}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <NewAppScreen templateFileName="App.tsx" />
-    </View>
+    <AppState>
+      <AppRouter />
+    </AppState>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
 
 export default App;
