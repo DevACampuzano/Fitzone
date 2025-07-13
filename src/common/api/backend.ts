@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 
 interface IError {
@@ -14,7 +15,7 @@ const backendApi = axios.create({
 
 backendApi.interceptors.response.use(
   response => response,
-  error => {
+  async error => {
     if (error.response?.data) {
       if (error.response?.data.errors) {
         const listMsg: string[] = error.response?.data.errors.map(
@@ -22,7 +23,8 @@ backendApi.interceptors.response.use(
         );
         return Promise.reject(new Error(listMsg.join(', ')));
       }
-      return Promise.reject(new Error(error.response?.data.message));
+      const message = error.response.data.message || 'Error desconocido';
+      return Promise.reject(new Error(message));
     } else {
       return Promise.reject(
         new Error(
@@ -30,6 +32,22 @@ backendApi.interceptors.response.use(
         ),
       );
     }
+  },
+);
+
+backendApi.interceptors.request.use(
+  async config => {
+    const userStorageJson = await AsyncStorage.getItem('user-storage');
+    if (userStorageJson) {
+      const userStorage = JSON.parse(userStorageJson);
+      if (userStorage.state.token) {
+        config.headers['access-token'] = userStorage.state.token;
+      }
+    }
+    return config;
+  },
+  error => {
+    return Promise.reject(error);
   },
 );
 

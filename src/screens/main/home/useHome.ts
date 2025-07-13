@@ -1,32 +1,30 @@
-import { useState } from 'react';
-import { useUserStore } from '../../../common/store';
+/* eslint-disable react-hooks/exhaustive-deps */
+import { ToastContext, useUserStore } from '../../../common/store';
 import { Alert } from 'react-native';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
-
-const data: FeaturedClass[] = [
-  {
-    id: '1',
-    name: 'CrossFit Matutino',
-    time: '07:00 AM',
-    image:
-      'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=300&h=200&fit=crop',
-    spots: 5,
-  },
-  {
-    id: '2',
-    name: 'Yoga Relajante',
-    time: '06:30 PM',
-    image:
-      'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=300&h=200&fit=crop',
-    spots: 8,
-  },
-];
+import { useQueries } from '@tanstack/react-query';
+import { classActions, UserActions } from '../../../actions';
+import { useContext, useEffect } from 'react';
+import { useErrorsToken } from '../../../common/helpers';
 
 export const useHome = (
   navigation: BottomTabNavigationProp<TabBarScreenMain, 'Home', undefined>,
 ) => {
-  const [featuredClasses, _] = useState<FeaturedClass[]>(data);
+  const [featuredClasses, myProgress] = useQueries({
+    queries: [
+      {
+        queryKey: ['featuredClasses'],
+        queryFn: ({ signal }) => classActions.getClasses(2, 0, signal),
+      },
+      {
+        queryKey: ['myProgress'],
+        queryFn: ({ signal }) => UserActions.getMyProgress(signal),
+      },
+    ],
+  });
   const userName = useUserStore(state => state.user.name);
+  const { showToast } = useContext(ToastContext);
+  const { validateError } = useErrorsToken();
 
   const handleQuickAction = (actionId: string | number) => {
     switch (actionId) {
@@ -39,8 +37,23 @@ export const useHome = (
     }
   };
 
+  useEffect(() => {
+    if (featuredClasses.error) {
+      const msg = validateError(featuredClasses.error.message);
+      showToast(msg, 'warning-sharp');
+    }
+    if (myProgress.error) {
+      const msg = validateError(myProgress.error.message);
+      showToast(msg, 'warning-sharp');
+    }
+  }, [featuredClasses.error, myProgress.error]);
+
   return {
-    featuredClasses,
+    featuredClasses: (featuredClasses.data?.data as FeaturedClass[]) ?? [],
+    myProgress: myProgress.data?.data ?? {
+      totalClasses: 0,
+      nextClasses: 0,
+    },
     userName,
     handleQuickAction,
   };

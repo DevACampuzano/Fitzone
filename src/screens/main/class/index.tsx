@@ -16,14 +16,6 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useClass } from './useClass';
 import { CardClass, Tag } from './components';
 
-const categories = [
-  'Todas',
-  'CrossFit',
-  'Yoga',
-  'Spinning',
-  'Pilates',
-  'Zumba',
-];
 export const Class: React.FC<ClassRouterScreenProps<'list'>> = ({
   navigation,
 }) => {
@@ -34,6 +26,7 @@ export const Class: React.FC<ClassRouterScreenProps<'list'>> = ({
     setSelectedCategory,
     searchText,
     setSearchText,
+    categories,
   } = useClass();
 
   return (
@@ -60,17 +53,16 @@ export const Class: React.FC<ClassRouterScreenProps<'list'>> = ({
             showsHorizontalScrollIndicator={false}
             style={styles.categoriesContainer}
             data={categories}
-            renderItem={({ item }) => (
+            renderItem={({ item: { id, name } }) => (
               <Tag
-                tag={item}
-                onPress={setSelectedCategory}
-                style={selectedCategory === item && styles.categoryButtonActive}
-                textStyle={
-                  selectedCategory === item && styles.categoryTextActive
-                }
+                id={id}
+                tag={name}
+                onPress={() => setSelectedCategory(id)}
+                style={selectedCategory === id && styles.categoryButtonActive}
+                textStyle={selectedCategory === id && styles.categoryTextActive}
               />
             )}
-            keyExtractor={item => item}
+            keyExtractor={item => item.id.toString()}
           />
         </View>
         <ScrollView

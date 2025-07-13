@@ -22,7 +22,12 @@ export const Home: React.FC<TabNavigatorMainScreenProps<'Home'>> = ({
   navigation,
 }) => {
   const { bottom: paddingBottom } = useSafeAreaInsets();
-  const { featuredClasses, userName, handleQuickAction } = useHome(navigation);
+  const { featuredClasses, myProgress, userName, handleQuickAction } =
+    useHome(navigation);
+
+  console.log('Featured Classes:', featuredClasses);
+  console.log('My Progress:', myProgress);
+
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={[styles.container]}>
       <View style={styles.header}>
@@ -48,40 +53,42 @@ export const Home: React.FC<TabNavigatorMainScreenProps<'Home'>> = ({
         </View>
       </View>
 
-      <View style={styles.section}>
-        <View style={styles.sectionHeader}>
-          <Text style={styles.sectionTitle}>Clases Destacadas</Text>
-          <TouchableOpacity
-            onPress={() => navigation.navigate('Class')}
-            activeOpacity={0.7}
-          >
-            <Text style={styles.seeAllText}>Ver todas</Text>
-          </TouchableOpacity>
-        </View>
+      {featuredClasses.length > 0 && (
+        <View style={styles.section}>
+          <View style={styles.sectionHeader}>
+            <Text style={styles.sectionTitle}>Clases Destacadas</Text>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('Class')}
+              activeOpacity={0.7}
+            >
+              <Text style={styles.seeAllText}>Ver todas</Text>
+            </TouchableOpacity>
+          </View>
 
-        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-          {featuredClasses.map(classItem => (
-            <FeaturedClass
-              key={classItem.id}
-              {...classItem}
-              onPress={() =>
-                navigation.navigate('Class', {
-                  screen: 'ClassDetail',
-                  params: {
-                    id: classItem.id,
-                  },
-                })
-              }
-            />
-          ))}
-        </ScrollView>
-      </View>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            {featuredClasses.map(classItem => (
+              <FeaturedClass
+                key={classItem.id}
+                {...classItem}
+                onPress={() =>
+                  navigation.navigate('Class', {
+                    screen: 'ClassDetail',
+                    params: {
+                      id: classItem.id,
+                    },
+                  })
+                }
+              />
+            ))}
+          </ScrollView>
+        </View>
+      )}
 
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Tu Progreso</Text>
         <View style={styles.statsContainer}>
-          <Progress number={12} label="Clases este mes" />
-          <Progress number={3} label="Próximas reservas" />
+          <Progress number={myProgress.totalClasses} label="Clases este mes" />
+          <Progress number={myProgress.nextClasses} label="Próximas reservas" />
         </View>
       </View>
       <View style={{ paddingBottom: paddingBottom + 50 }} />

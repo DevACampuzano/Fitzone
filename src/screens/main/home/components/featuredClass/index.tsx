@@ -24,7 +24,15 @@ export const FeaturedClass: React.FC<FeaturedClassProps> = ({
         <View style={styles.featuredFooter}>
           <View style={styles.detailItem}>
             <Icon name="time-outline" size={16} color="#666" />
-            <Text style={styles.detailText}>{time}</Text>
+            <Text style={styles.detailText}>
+              {new Date(time).toLocaleTimeString([], {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+              })}
+            </Text>
           </View>
           <View style={styles.detailItem}>
             <Icon name="people-outline" size={16} color="#666" />
