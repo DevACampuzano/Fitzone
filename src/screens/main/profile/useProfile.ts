@@ -19,12 +19,6 @@ const menuItems = [
     icon: 'card-outline',
     onPress: () => Alert.alert('Próximamente', 'Función en desarrollo'),
   },
-  {
-    id: 'payment-methods',
-    title: 'Métodos de Pago',
-    icon: 'wallet-outline',
-    onPress: () => Alert.alert('Próximamente', 'Función en desarrollo'),
-  },
 ];
 export const useProfile = () => {
   const navigation = useNavigation();

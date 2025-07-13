@@ -1,6 +1,7 @@
 import Icon from '@react-native-vector-icons/ionicons';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 import styles from './styles';
+import { getDifficultyColor } from '../../../../../common/helpers/get-difficulty-color';
 
 export const CardClass: React.FC<CardClassProps> = ({
   onPress,
@@ -14,20 +15,6 @@ export const CardClass: React.FC<CardClassProps> = ({
   maxSpots,
   price,
 }) => {
-  const getDifficultyColor = (
-    diff: 'Principiante' | 'Intermedio' | 'Avanzado',
-  ) => {
-    switch (diff) {
-      case 'Principiante':
-        return '#96CEB4';
-      case 'Intermedio':
-        return '#FECA57';
-      case 'Avanzado':
-        return '#FF6B6B';
-      default:
-        return '#999';
-    }
-  };
   const date = new Date(time);
   const formattedTime = date.toLocaleTimeString([], {
     hour: '2-digit',

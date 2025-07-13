@@ -55,19 +55,20 @@ export const TabNavigatorMain = () => {
       })}
     >
       <Tab.Screen
-        name="Home"
-        component={Home}
-        options={{
-          title: 'Inicio',
-        }}
-      />
-      <Tab.Screen
         name="Class"
         component={ClassRouter}
         options={{
           title: 'Clases',
         }}
       />
+      <Tab.Screen
+        name="Home"
+        component={Home}
+        options={{
+          title: 'Inicio',
+        }}
+      />
+
       <Tab.Screen
         name="Reservations"
         component={Reservations}

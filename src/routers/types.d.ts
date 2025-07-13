@@ -20,6 +20,6 @@ type AppRouterScreen = {
 type ClassRouterScreen = {
   list: undefined;
   ClassDetail: {
-    id: string | number;
+    id: number;
   };
 };
