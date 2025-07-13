@@ -8,5 +8,8 @@ interface IClass {
   maxSpots: number;
   price: number;
   image: string;
-  category: string;
+  category: {
+    id: number;
+    name: string;
+  };
 }

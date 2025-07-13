@@ -54,17 +54,34 @@ export const TabNavigatorMain = () => {
         headerShown: false,
       })}
     >
-      <Tab.Screen name="Home" component={Home} />
+      <Tab.Screen
+        name="Home"
+        component={Home}
+        options={{
+          title: 'Inicio',
+        }}
+      />
       <Tab.Screen
         name="Class"
         component={ClassRouter}
-        initialParams={undefined}
         options={{
-          lazy: false,
+          title: 'Clases',
         }}
       />
-      <Tab.Screen name="Reservations" component={Reservations} />
-      <Tab.Screen name="Profile" component={Profile} />
+      <Tab.Screen
+        name="Reservations"
+        component={Reservations}
+        options={{
+          title: 'Reservas',
+        }}
+      />
+      <Tab.Screen
+        name="Profile"
+        component={Profile}
+        options={{
+          title: 'Perfil',
+        }}
+      />
     </Tab.Navigator>
   );
 };
