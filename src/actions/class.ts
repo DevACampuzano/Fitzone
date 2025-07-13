@@ -13,4 +13,15 @@ const getClasses = async (
     .then(response => response.data);
 };
 
-export const classActions = { getClasses };
+const getMySchedule = async (signal?: AbortSignal) => {
+  return await backendApi
+    .get('/schedules/get-my-schedules', { signal })
+    .then(response => response.data);
+};
+
+const getMyStats = async (signal?: AbortSignal) => {
+  return await backendApi
+    .get('/schedules/get-my-stats', { signal })
+    .then(response => response.data);
+};
+export const classActions = { getClasses, getMySchedule, getMyStats };

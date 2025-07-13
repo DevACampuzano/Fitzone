@@ -25,9 +25,6 @@ export const Home: React.FC<TabNavigatorMainScreenProps<'Home'>> = ({
   const { featuredClasses, myProgress, userName, handleQuickAction } =
     useHome(navigation);
 
-  console.log('Featured Classes:', featuredClasses);
-  console.log('My Progress:', myProgress);
-
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={[styles.container]}>
       <View style={styles.header}>

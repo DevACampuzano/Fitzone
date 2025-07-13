@@ -3,6 +3,6 @@ interface FeaturedClassProps {
   name: string;
   time: string;
   image: string;
-  spots: number;
+  spotsAvailable: number;
   onPress: () => void;
 }

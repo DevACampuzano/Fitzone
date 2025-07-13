@@ -9,8 +9,18 @@ export const FeaturedClass: React.FC<FeaturedClassProps> = ({
   time,
   image,
   onPress,
-  spots,
+  spotsAvailable,
 }) => {
+  const date = new Date(time);
+  const formattedTime = date.toLocaleTimeString([], {
+    hour: '2-digit',
+    minute: '2-digit',
+  });
+  const formattedDate = date.toLocaleDateString('es-ES', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  });
   return (
     <TouchableOpacity
       key={id}
@@ -25,18 +35,12 @@ export const FeaturedClass: React.FC<FeaturedClassProps> = ({
           <View style={styles.detailItem}>
             <Icon name="time-outline" size={16} color="#666" />
             <Text style={styles.detailText}>
-              {new Date(time).toLocaleTimeString([], {
-                year: 'numeric',
-                month: '2-digit',
-                day: '2-digit',
-                hour: '2-digit',
-                minute: '2-digit',
-              })}
+              {`${formattedDate} ${formattedTime}`}
             </Text>
           </View>
           <View style={styles.detailItem}>
             <Icon name="people-outline" size={16} color="#666" />
-            <Text style={styles.detailText}>{spots} cupos</Text>
+            <Text style={styles.detailText}>{spotsAvailable} cupos</Text>
           </View>
         </View>
       </View>

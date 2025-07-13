@@ -3,7 +3,7 @@ interface Booking {
   className: string;
   date: string;
   time: string;
-  status: 'confirmed' | 'pending' | 'cancelled';
   location: string;
   price: number;
+  image: string;
 }

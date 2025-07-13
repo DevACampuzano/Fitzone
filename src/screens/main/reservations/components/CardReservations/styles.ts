@@ -11,18 +11,16 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 8,
     elevation: 4,
-  },
-  bookingHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'flex-start',
-    marginBottom: 16,
+    alignItems: 'center',
   },
+
   className: {
     fontSize: 18,
     fontWeight: 'bold',
     color: '#333',
-    marginBottom: 4,
+    marginBottom: 20,
   },
   statusBadge: {
     paddingHorizontal: 12,
@@ -82,6 +80,16 @@ const styles = StyleSheet.create({
     color: '#FFF',
     marginLeft: 4,
     fontWeight: '500',
+  },
+  bookingImage: {
+    width: 100,
+    height: 100,
+    borderRadius: 8,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    elevation: 4,
   },
 });
 export default styles;

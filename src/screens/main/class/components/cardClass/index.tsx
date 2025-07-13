@@ -28,6 +28,16 @@ export const CardClass: React.FC<CardClassProps> = ({
         return '#999';
     }
   };
+  const date = new Date(time);
+  const formattedTime = date.toLocaleTimeString([], {
+    hour: '2-digit',
+    minute: '2-digit',
+  });
+  const formattedDate = date.toLocaleDateString('es-ES', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  });
   return (
     <TouchableOpacity
       style={styles.classCard}
@@ -52,7 +62,9 @@ export const CardClass: React.FC<CardClassProps> = ({
         <View style={styles.classDetails}>
           <View style={styles.detailItem}>
             <Icon name="time-outline" size={16} color="#666" />
-            <Text style={styles.detailText}>{time}</Text>
+            <Text
+              style={styles.detailText}
+            >{`${formattedDate} ${formattedTime}`}</Text>
           </View>
           <View style={styles.detailItem}>
             <Icon name="timer-outline" size={16} color="#666" />

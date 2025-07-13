@@ -1,7 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useNavigation } from '@react-navigation/native';
-import { useUserStore } from '../../../common/store';
-import { useState } from 'react';
+import { ToastContext, useUserStore } from '../../../common/store';
+import { useContext, useEffect, useState } from 'react';
 import { Alert } from 'react-native';
+import { useQueries } from '@tanstack/react-query';
+import { classActions } from '../../../actions';
+import { useErrorsToken } from '../../../common/helpers';
 const menuItems = [
   {
     id: 'edit-profile',
@@ -26,7 +30,26 @@ export const useProfile = () => {
   const navigation = useNavigation();
   const onClose = useUserStore(state => state.clearUser);
   const user = useUserStore(state => state.user);
+
+  const [{ data: stats, error: errorStats }] = useQueries({
+    queries: [
+      {
+        queryKey: ['stats'],
+        queryFn: ({ signal }) => classActions.getMyStats(signal),
+        initialData: {
+          status: true,
+          data: {
+            totalClasses: 0,
+          },
+        },
+        select: (data: any) => data.data,
+      },
+    ],
+  });
+
   const [notificationsEnabled, setNotificationsEnabled] = useState(false);
+  const { showToast } = useContext(ToastContext);
+  const { validateError } = useErrorsToken();
 
   const handleLogout = () => {
     Alert.alert(
@@ -49,11 +72,19 @@ export const useProfile = () => {
     );
   };
 
+  useEffect(() => {
+    if (errorStats) {
+      const msg = validateError(errorStats.message);
+      showToast(msg, 'warning-sharp');
+    }
+  }, [errorStats]);
+
   return {
     handleLogout,
     user,
     notificationsEnabled,
     setNotificationsEnabled,
     menuItems,
+    stats,
   };
 };

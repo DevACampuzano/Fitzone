@@ -15,10 +15,25 @@ export const useHome = (
       {
         queryKey: ['featuredClasses'],
         queryFn: ({ signal }) => classActions.getClasses(2, 0, signal),
+        // staleTime: 1000 * 60 * 60,
+        initialData: {
+          status: true,
+          data: [],
+        },
+        select: (data: any) => data.data,
       },
       {
         queryKey: ['myProgress'],
         queryFn: ({ signal }) => UserActions.getMyProgress(signal),
+        // staleTime: 1000 * 60 * 60,
+        initialData: {
+          status: true,
+          data: {
+            totalClasses: 0,
+            nextClasses: 0,
+          },
+        },
+        select: (data: any) => data.data,
       },
     ],
   });
@@ -49,11 +64,8 @@ export const useHome = (
   }, [featuredClasses.error, myProgress.error]);
 
   return {
-    featuredClasses: (featuredClasses.data?.data as FeaturedClass[]) ?? [],
-    myProgress: myProgress.data?.data ?? {
-      totalClasses: 0,
-      nextClasses: 0,
-    },
+    featuredClasses: featuredClasses.data as FeaturedClass[],
+    myProgress: myProgress.data,
     userName,
     handleQuickAction,
   };

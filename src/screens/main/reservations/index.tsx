@@ -19,7 +19,6 @@ export const Reservations: React.FC<
   const { bottom: paddingBottom } = useSafeAreaInsets();
   const {
     filteredBookings,
-    handleCancelBooking,
     onRefresh,
     refreshing,
     selectedTab,
@@ -103,12 +102,7 @@ export const Reservations: React.FC<
           </View>
         ) : (
           filteredBookings.map(booking => (
-            <CardReservations
-              key={booking.id}
-              booking={booking}
-              handleCancelBooking={handleCancelBooking}
-              showActions={selectedTab === 'upcoming'}
-            />
+            <CardReservations key={booking.id} booking={booking} />
           ))
         )}
         <View style={{ paddingBottom: paddingBottom + 50 }} />

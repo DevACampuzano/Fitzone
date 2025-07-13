@@ -1,79 +1,51 @@
-import { useState } from 'react';
-import { Alert } from 'react-native';
-
-const data: Booking[] = [
-  {
-    id: '1',
-    className: 'CrossFit Matutino',
-    date: '2026-01-15',
-    time: '07:00 AM',
-    status: 'confirmed',
-    location: 'Sede Norte',
-    price: 25000,
-  },
-  {
-    id: '2',
-    className: 'Yoga Relajante',
-    date: '2024-01-16',
-    time: '06:30 PM',
-    status: 'pending',
-    location: 'Sede Centro',
-    price: 20000,
-  },
-  {
-    id: '3',
-    className: 'Spinning Intensivo',
-    date: '2024-01-10',
-    time: '05:30 PM',
-    status: 'confirmed',
-    location: 'Sede Sur',
-    price: 22000,
-  },
-];
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useQuery } from '@tanstack/react-query';
+import { useContext, useEffect, useState } from 'react';
+import { classActions } from '../../../actions';
+import { ToastContext } from '../../../common/store';
+import { useErrorsToken } from '../../../common/helpers';
 
 const useReservations = () => {
-  const [bookings, _] = useState<Booking[]>(data);
-  const [refreshing, setRefreshing] = useState(false);
   const [selectedTab, setSelectedTab] = useState<'upcoming' | 'past'>(
     'upcoming',
   );
 
-  const onRefresh = async () => {
-    setRefreshing(true);
-    // await loadBookings();
-    setRefreshing(false);
-  };
-
-  const handleCancelBooking = (booking: Booking) => {
-    Alert.alert(
-      'Cancelar Reserva',
-      `¿Estás seguro de que quieres cancelar tu reserva para ${booking.className}?`,
-      [
-        { text: 'No', style: 'cancel' },
-        {
-          text: 'Sí, cancelar',
-          style: 'destructive',
-          onPress: () => {
-            // Aquí iría la lógica para cancelar la reserva
-            Alert.alert(
-              'Reserva Cancelada',
-              'Tu reserva ha sido cancelada exitosamente',
-            );
-          },
-        },
-      ],
-    );
-  };
+  const { showToast } = useContext(ToastContext);
+  const { validateError } = useErrorsToken();
+  const {
+    data: { data: bookings },
+    isLoading: refreshing,
+    refetch: onRefresh,
+    error,
+  } = useQuery({
+    queryKey: ['bookings'],
+    queryFn: ({ signal }) => classActions.getMySchedule(signal),
+    initialData: {
+      status: true,
+      data: [],
+    },
+  });
 
   const isUpcoming = (date: string) => {
-    return new Date(date) >= new Date();
+    const today = new Date();
+    const [day, month, year] = date.split('/');
+    const bookingDate = new Date(Number(year), Number(month) - 1, Number(day));
+    return bookingDate >= today;
   };
 
-  const filteredBookings = bookings.filter(booking => {
+  useEffect(() => {
+    if (error) {
+      const msg = validateError(error.message);
+      showToast(msg, 'warning-sharp');
+    }
+  }, [error]);
+
+  const filteredBookings = bookings.filter((booking: Booking) => {
     if (selectedTab === 'upcoming') {
-      return isUpcoming(booking.date) && booking.status !== 'cancelled';
+      return isUpcoming(booking.date);
     } else {
-      return !isUpcoming(booking.date) || booking.status === 'cancelled';
+      console.log('Bookings:', bookings);
+      return !isUpcoming(booking.date);
     }
   });
 
@@ -83,7 +55,6 @@ const useReservations = () => {
     selectedTab,
     setSelectedTab,
     onRefresh,
-    handleCancelBooking,
   };
 };
 
