@@ -3,6 +3,7 @@ import { useForm } from '../../../common/hooks';
 import { ToastContext, useUserStore } from '../../../common/store';
 import { UserActions } from '../../../actions';
 import { useMutation } from '@tanstack/react-query';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 interface FormData {
   email: string;
@@ -14,7 +15,9 @@ const initialState: FormData = {
   password: '1234',
 };
 
-export const useLogin = () => {
+export const useLogin = (
+  navigation: NativeStackNavigationProp<AppRouterScreen, 'Login', undefined>,
+) => {
   const { email, password, onChange } = useForm<FormData>(initialState);
   const [showPassword, setShowPassword] = useState(false);
   const { showToast } = useContext(ToastContext);
@@ -37,6 +40,10 @@ export const useLogin = () => {
         showToast('Inicio de sesión exitoso', 'checkmark-circle-outline');
         saveUser(data.user);
         saveToken(data.token);
+        navigation.reset({
+          index: 0,
+          routes: [{ name: 'Main' as never }],
+        });
       }
     },
   });

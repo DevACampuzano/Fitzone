@@ -6,12 +6,12 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { ToastContext } from '../../../common/store';
 
 const inicialState: FormDataRegister = {
-  name: 'test',
-  lastName: 'test',
-  email: 'a@a.c',
+  name: '',
+  lastName: '',
+  email: '',
   phone: '',
-  password: '1234',
-  confirmPassword: '1234',
+  password: '',
+  confirmPassword: '',
 };
 const validators: ValidateProps<FormDataRegister> = {
   name: {

@@ -1,11 +1,12 @@
 import Icon from '@react-native-vector-icons/ionicons';
 import {
+  type BottomTabScreenProps,
   createBottomTabNavigator,
-  BottomTabScreenProps,
 } from '@react-navigation/bottom-tabs';
 import { ParamListBase, RouteProp } from '@react-navigation/native';
-import { Home } from '../screens';
+import { Home, Profile, Reservations } from '../screens';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { ClassRouter } from './classRouterStack';
 
 export type TabNavigatorMainScreenProps<S extends keyof TabBarScreenMain> =
   BottomTabScreenProps<TabBarScreenMain, S>;
@@ -13,7 +14,7 @@ export type TabNavigatorMainScreenProps<S extends keyof TabBarScreenMain> =
 const Tab = createBottomTabNavigator<TabBarScreenMain>();
 
 export const TabNavigatorMain = () => {
-  const { bottom: paddingBottom } = useSafeAreaInsets();
+  const { bottom } = useSafeAreaInsets();
   const tabBarIcon = (
     { color, size, focused }: TabBarIconProps,
     route: RouteProp<ParamListBase, string>,
@@ -40,15 +41,30 @@ export const TabNavigatorMain = () => {
         tabBarInactiveTintColor: '#8E8E93',
         tabBarStyle: {
           backgroundColor: '#FFFFFF',
-          borderTopWidth: 1,
-          borderTopColor: '#E5E5EA',
-          paddingVertical: 10,
-          paddingBottom: paddingBottom,
+          borderWidth: 1,
+          borderColor: '#E5E5EA',
+          borderRadius: 16,
+          height: 55,
+          position: 'absolute',
+          bottom,
+          left: 10,
+          right: 10,
+          marginHorizontal: 10,
         },
         headerShown: false,
       })}
     >
       <Tab.Screen name="Home" component={Home} />
+      <Tab.Screen
+        name="Class"
+        component={ClassRouter}
+        initialParams={undefined}
+        options={{
+          lazy: false,
+        }}
+      />
+      <Tab.Screen name="Reservations" component={Reservations} />
+      <Tab.Screen name="Profile" component={Profile} />
     </Tab.Navigator>
   );
 };

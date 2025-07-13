@@ -25,7 +25,7 @@ export const Login: React.FC<AppRouterScreenProps<'Login'>> = ({
     isLoading,
     handleLogin,
     setShowPassword,
-  } = useLogin();
+  } = useLogin(navigation);
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>

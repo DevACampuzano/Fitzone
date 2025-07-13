@@ -6,7 +6,7 @@ interface TabBarIconProps {
 
 type TabBarScreenMain = {
   Home: undefined;
-  Class: undefined;
+  Class: NavigatorScreenParams<ClassRouterScreen> | undefined;
   Reservations: undefined;
   Profile: undefined;
 };
@@ -14,8 +14,12 @@ type TabBarScreenMain = {
 type AppRouterScreen = {
   Login: undefined;
   Register: undefined;
-  ClassDetail: undefined;
+  Main: undefined;
 };
 
-type AppRouterScreenProps<S extends keyof AppRouterScreen> =
-  NativeStackScreenProps<AppRouterScreen, S>;
+type ClassRouterScreen = {
+  list: undefined;
+  ClassDetail: {
+    id: string | number;
+  };
+};

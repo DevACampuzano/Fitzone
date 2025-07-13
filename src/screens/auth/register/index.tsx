@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {
   View,
@@ -106,16 +107,16 @@ export const Register: React.FC<AppRouterScreenProps<'Register'>> = ({
                 </View>
               </View>
               {(touched.name && errors?.name) ||
-              (touched.lastName && errors?.lastName) ? (
-                <View style={styles.errorRow}>
-                  <Text style={[styles.errorText, styles.halfWidth]}>
-                    {touched.name ? errors?.name : ''}
-                  </Text>
-                  <Text style={[styles.errorText, styles.halfWidth]}>
-                    {touched.lastName ? errors?.lastName : ''}
-                  </Text>
-                </View>
-              ) : null}
+                (touched.lastName && errors?.lastName && (
+                  <View style={styles.errorRow}>
+                    <Text style={[styles.errorText, styles.halfWidth]}>
+                      {touched.name ? errors?.name : ''}
+                    </Text>
+                    <Text style={[styles.errorText, styles.halfWidth]}>
+                      {touched.lastName ? errors?.lastName : ''}
+                    </Text>
+                  </View>
+                ))}
 
               <View style={styles.inputContainer}>
                 <Icon
@@ -276,7 +277,7 @@ export const Register: React.FC<AppRouterScreenProps<'Register'>> = ({
               <View style={styles.loginContainer}>
                 <Text style={styles.loginText}>¿Ya tienes cuenta? </Text>
                 <TouchableOpacity
-                  onPress={() => navigation.navigate('Login')}
+                  onPress={() => navigation.goBack()}
                   activeOpacity={0.7}
                 >
                   <Text style={styles.loginLink}>Inicia Sesión</Text>
