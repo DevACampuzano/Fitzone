@@ -10,6 +10,18 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
   },
+  backButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: '#F8F9FA',
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    top: 16,
+    left: 16,
+    zIndex: 1000,
+  },
   imageContainer: {
     position: 'relative',
   },

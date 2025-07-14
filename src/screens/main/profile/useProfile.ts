@@ -2,10 +2,15 @@
 import { useNavigation } from '@react-navigation/native';
 import { ToastContext, useUserStore } from '../../../common/store';
 import { useContext, useEffect, useState } from 'react';
-import { Alert } from 'react-native';
+import { Alert, PermissionsAndroid, Platform } from 'react-native';
 import { useQueries } from '@tanstack/react-query';
 import { classActions } from '../../../actions';
-import { useErrorsToken } from '../../../common/helpers';
+import {
+  handleCheckNotifications,
+  useErrorsToken,
+} from '../../../common/helpers';
+import messaging from '@react-native-firebase/messaging';
+
 const menuItems = [
   {
     id: 'edit-profile',
@@ -45,6 +50,23 @@ export const useProfile = () => {
   const { showToast } = useContext(ToastContext);
   const { validateError } = useErrorsToken();
 
+  const handleRequestNotificationsPermission = async () => {
+    if (Platform.OS === 'ios') {
+      const authStatus = await messaging().requestPermission();
+      const enabled =
+        authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+        authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+      setNotificationsEnabled(enabled);
+    } else {
+      const authStatus = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
+      );
+      setNotificationsEnabled(
+        authStatus === PermissionsAndroid.RESULTS.GRANTED,
+      );
+    }
+  };
+
   const handleLogout = () => {
     Alert.alert(
       'Cerrar Sesión',
@@ -73,12 +95,20 @@ export const useProfile = () => {
     }
   }, [errorStats]);
 
+  useEffect(() => {
+    const checkNotifications = async () => {
+      const isEnabled = await handleCheckNotifications();
+      setNotificationsEnabled(isEnabled);
+    };
+    checkNotifications();
+  }, []);
+
   return {
     handleLogout,
     user,
     notificationsEnabled,
-    setNotificationsEnabled,
     menuItems,
     stats,
+    handleRequestNotificationsPermission,
   };
 };

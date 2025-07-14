@@ -13,11 +13,12 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import useClassDetail from './useClassDetail';
 import { DetailsItem, ListItem, Loading, NotResult, Tag } from './components';
 import styles from './sytles';
-import { getDifficultyColor } from '../../../common/helpers/get-difficulty-color';
+import { getDifficultyColor } from '../../../common/helpers';
 import { Toast } from '../../../common/components';
 
 export const ClassDetail: React.FC<ClassRouterScreenProps<'ClassDetail'>> = ({
   route: { params },
+  navigation,
 }) => {
   const { bottom: paddingBottom } = useSafeAreaInsets();
   const { id } = params;
@@ -40,6 +41,15 @@ export const ClassDetail: React.FC<ClassRouterScreenProps<'ClassDetail'>> = ({
   }
   return (
     <View style={styles.container}>
+      {Platform.OS === 'android' && (
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={() => navigation.goBack()}
+        >
+          <Icon name="arrow-back-outline" size={24} color="#333" />
+        </TouchableOpacity>
+      )}
+
       <Toast
         show={toast.show}
         msg={toast.msg}

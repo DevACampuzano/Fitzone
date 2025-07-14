@@ -1,7 +1,7 @@
 import Icon from '@react-native-vector-icons/ionicons';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 import styles from './styles';
-import { getDifficultyColor } from '../../../../../common/helpers/get-difficulty-color';
+import { getDifficultyColor } from '../../../../../common/helpers';
 
 export const CardClass: React.FC<CardClassProps> = ({
   onPress,

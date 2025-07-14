@@ -14,7 +14,7 @@ export const Profile: React.FC<
     handleLogout,
     user,
     notificationsEnabled,
-    setNotificationsEnabled,
+    handleRequestNotificationsPermission,
     menuItems,
     stats,
   } = useProfile();
@@ -53,7 +53,12 @@ export const Profile: React.FC<
           </View>
           <Switch
             value={notificationsEnabled}
-            onValueChange={setNotificationsEnabled}
+            onValueChange={
+              !notificationsEnabled
+                ? handleRequestNotificationsPermission
+                : undefined
+            }
+            disabled={notificationsEnabled}
             trackColor={{ false: '#E5E5EA', true: '#FF6B35' }}
             thumbColor="#FFF"
           />
