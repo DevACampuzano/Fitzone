@@ -10,7 +10,9 @@ interface IError {
 }
 
 const backendApi = axios.create({
-  baseURL: 'http://192.168.1.3:3000',
+  baseURL: __DEV__
+    ? 'http://192.168.1.3:3000'
+    : 'https://5rq3k7m3-3000.use.devtunnels.ms',
 });
 
 backendApi.interceptors.response.use(

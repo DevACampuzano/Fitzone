@@ -27,7 +27,7 @@ export const Toast = ({
   }, [fadeAnim]);
 
   const fadeIn = React.useCallback(() => {
-    setZIndex(10);
+    setZIndex(10); // Much higher zIndex for modal compatibility
     Animated.timing(fadeAnim, {
       toValue: 1,
       duration: 500,
@@ -46,6 +46,7 @@ export const Toast = ({
   React.useEffect(() => {
     if (show) fadeIn();
   }, [show, fadeIn]);
+
   return (
     <Animated.View
       style={[

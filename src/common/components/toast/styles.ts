@@ -12,7 +12,7 @@ export const styles = StyleSheet.create({
     shadowOffset: { width: 4, height: 4 },
     shadowOpacity: 0.1,
     shadowRadius: 8,
-    elevation: 5,
+    elevation: 10, // Increased elevation for Android
   },
   textContainer: {
     flexDirection: 'row',

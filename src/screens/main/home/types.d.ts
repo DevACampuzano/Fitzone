@@ -3,5 +3,5 @@ interface FeaturedClass {
   name: string;
   time: string;
   image: string;
-  spots: number;
+  spotsAvailable: number;
 }

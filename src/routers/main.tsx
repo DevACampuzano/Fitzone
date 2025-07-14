@@ -7,6 +7,7 @@ import { ParamListBase, RouteProp } from '@react-navigation/native';
 import { Home, Profile, Reservations } from '../screens';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ClassRouter } from './classRouterStack';
+import { useListenNotification } from '../common/helpers';
 
 export type TabNavigatorMainScreenProps<S extends keyof TabBarScreenMain> =
   BottomTabScreenProps<TabBarScreenMain, S>;
@@ -14,6 +15,7 @@ export type TabNavigatorMainScreenProps<S extends keyof TabBarScreenMain> =
 const Tab = createBottomTabNavigator<TabBarScreenMain>();
 
 export const TabNavigatorMain = () => {
+  useListenNotification();
   const { bottom } = useSafeAreaInsets();
   const tabBarIcon = (
     { color, size, focused }: TabBarIconProps,
@@ -46,7 +48,7 @@ export const TabNavigatorMain = () => {
           borderRadius: 16,
           height: 55,
           position: 'absolute',
-          bottom,
+          bottom: bottom + 10,
           left: 10,
           right: 10,
           marginHorizontal: 10,
@@ -55,19 +57,20 @@ export const TabNavigatorMain = () => {
       })}
     >
       <Tab.Screen
-        name="Home"
-        component={Home}
-        options={{
-          title: 'Inicio',
-        }}
-      />
-      <Tab.Screen
         name="Class"
         component={ClassRouter}
         options={{
           title: 'Clases',
         }}
       />
+      <Tab.Screen
+        name="Home"
+        component={Home}
+        options={{
+          title: 'Inicio',
+        }}
+      />
+
       <Tab.Screen
         name="Reservations"
         component={Reservations}

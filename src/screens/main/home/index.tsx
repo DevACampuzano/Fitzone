@@ -22,11 +22,13 @@ export const Home: React.FC<TabNavigatorMainScreenProps<'Home'>> = ({
   navigation,
 }) => {
   const { bottom: paddingBottom } = useSafeAreaInsets();
-  const { featuredClasses, myProgress, userName, handleQuickAction } =
-    useHome(navigation);
-
-  console.log('Featured Classes:', featuredClasses);
-  console.log('My Progress:', myProgress);
+  const {
+    featuredClasses,
+    myProgress,
+    userName,
+    handleQuickAction,
+    onTestNotifications,
+  } = useHome(navigation);
 
   return (
     <ScrollView showsVerticalScrollIndicator={false} style={[styles.container]}>
@@ -35,7 +37,11 @@ export const Home: React.FC<TabNavigatorMainScreenProps<'Home'>> = ({
           <Text style={styles.greeting}>¡Hola, {userName}!</Text>
           <Text style={styles.subtitle}>¿Listo para entrenar hoy?</Text>
         </View>
-        <TouchableOpacity style={styles.notificationButton} activeOpacity={0.7}>
+        <TouchableOpacity
+          style={styles.notificationButton}
+          activeOpacity={0.7}
+          onPress={() => onTestNotifications()}
+        >
           <Icon name="notifications-outline" size={24} color="#333" />
         </TouchableOpacity>
       </View>

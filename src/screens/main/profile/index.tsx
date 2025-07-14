@@ -14,8 +14,9 @@ export const Profile: React.FC<
     handleLogout,
     user,
     notificationsEnabled,
-    setNotificationsEnabled,
+    handleRequestNotificationsPermission,
     menuItems,
+    stats,
   } = useProfile();
   const { bottom: paddingBottom } = useSafeAreaInsets();
   return (
@@ -38,7 +39,7 @@ export const Profile: React.FC<
       <View style={styles.statsSection}>
         <View style={styles.statCard}>
           <Icon name="fitness-outline" size={24} color="#FF6B35" />
-          <Text style={styles.statNumber}>{45}</Text>
+          <Text style={styles.statNumber}>{stats.totalClasses}</Text>
           <Text style={styles.statLabel}>Clases Tomadas</Text>
         </View>
       </View>
@@ -52,7 +53,12 @@ export const Profile: React.FC<
           </View>
           <Switch
             value={notificationsEnabled}
-            onValueChange={setNotificationsEnabled}
+            onValueChange={
+              !notificationsEnabled
+                ? handleRequestNotificationsPermission
+                : undefined
+            }
+            disabled={notificationsEnabled}
             trackColor={{ false: '#E5E5EA', true: '#FF6B35' }}
             thumbColor="#FFF"
           />

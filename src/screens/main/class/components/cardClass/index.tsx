@@ -1,6 +1,7 @@
 import Icon from '@react-native-vector-icons/ionicons';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 import styles from './styles';
+import { getDifficultyColor } from '../../../../../common/helpers';
 
 export const CardClass: React.FC<CardClassProps> = ({
   onPress,
@@ -14,20 +15,16 @@ export const CardClass: React.FC<CardClassProps> = ({
   maxSpots,
   price,
 }) => {
-  const getDifficultyColor = (
-    diff: 'Principiante' | 'Intermedio' | 'Avanzado',
-  ) => {
-    switch (diff) {
-      case 'Principiante':
-        return '#96CEB4';
-      case 'Intermedio':
-        return '#FECA57';
-      case 'Avanzado':
-        return '#FF6B6B';
-      default:
-        return '#999';
-    }
-  };
+  const date = new Date(time);
+  const formattedTime = date.toLocaleTimeString([], {
+    hour: '2-digit',
+    minute: '2-digit',
+  });
+  const formattedDate = date.toLocaleDateString('es-ES', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  });
   return (
     <TouchableOpacity
       style={styles.classCard}
@@ -52,7 +49,9 @@ export const CardClass: React.FC<CardClassProps> = ({
         <View style={styles.classDetails}>
           <View style={styles.detailItem}>
             <Icon name="time-outline" size={16} color="#666" />
-            <Text style={styles.detailText}>{time}</Text>
+            <Text
+              style={styles.detailText}
+            >{`${formattedDate} ${formattedTime}`}</Text>
           </View>
           <View style={styles.detailItem}>
             <Icon name="timer-outline" size={16} color="#666" />

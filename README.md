@@ -1,97 +1,103 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# FitZone
 
-# Getting Started
+Una aplicación móvil para la gestión de clases de fitness y reservas de gimnasio, desarrollada con React Native.
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+## 📱 Estructura del Proyecto
 
-## Step 1: Start Metro
-
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
-
-To start the Metro dev server, run the following command from the root of your React Native project:
-
-```sh
-# Using npm
-npm start
-
-# OR using Yarn
-yarn start
+```
+FitZone/
+├── src/
+│   ├── actions/           # Acciones de API
+│   ├── common/
+│   │   ├── api/          # Configuración del backend
+│   │   ├── components/   # Componentes reutilizables
+│   │   ├── helpers/      # Utilidades y helpers
+│   │   ├── hooks/        # Custom hooks
+│   │   └── store/        # Estado global
+│   ├── routers/          # Navegación de la app
+│   └── screens/          # Pantallas de la aplicación
+│       ├── auth/         # Pantallas de autenticación
+│       │   ├── login/
+│       │   └── register/
+│       └── main/         # Pantallas principales
+│           ├── home/     # Inicio
+│           ├── class/    # Lista de clases
+│           ├── profile/  # Perfil de usuario
+│           └── reservations/ # Reservas
+├── android/              # Configuración Android
+├── ios/                  # Configuración iOS
+└── __tests__/           # Tests
 ```
 
-## Step 2: Build and run your app
+## 🚀 Cómo Ejecutar
 
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
+### Prerrequisitos
 
-### Android
+- Node.js (v16 o superior)
+- React Native CLI
+- Android Studio (para Android)
+- Xcode (para iOS - solo macOS)
+- Bun (gestor de paquetes)
 
-```sh
-# Using npm
-npm run android
+### Instalación
 
-# OR using Yarn
-yarn android
+1. **Clonar el repositorio**
+
+   ```bash
+   git clone https://github.com/DevACampuzano/Fitzone
+   cd FitZone
+   ```
+
+2. **Instalar dependencias**
+
+   ```bash
+   bun install
+   ```
+
+3. **Configurar iOS (solo macOS)**
+   ```bash
+   cd ios
+   pod install
+   cd ..
+   ```
+
+### Ejecutar la Aplicación
+
+#### Android
+
+```bash
+# Iniciar Metro bundler
+bun start
+
+# En otra terminal, ejecutar en Android
+bun android
 ```
 
-### iOS
+#### iOS (solo macOS)
 
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
+```bash
+# Iniciar Metro bundler
+bun start
 
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
-
-```sh
-bundle install
+# En otra terminal, ejecutar en iOS
+bun ios
 ```
 
-Then, and every time you update your native dependencies, run:
+## 🏗️ Arquitectura
 
-```sh
-bundle exec pod install
-```
+- **Frontend**: React Native con TypeScript
+- **Navegación**: React Navigation (Tab y Stack navigators)
+- **Estado Global**: Zustand
+- **HTTP Client**: TanStack Query para manejo de estado del servidor
+- **UI**: Componentes nativos + react-native-vector-icons
+- **Validación**: Custom hooks para formularios
 
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
+## 📋 Funcionalidades
 
-```sh
-# Using npm
-npm run ios
-
-# OR using Yarn
-yarn ios
-```
-
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
-
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
-
-## Step 3: Modify your app
-
-Now that you have successfully run the app, let's make changes!
-
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
-
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
-
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+- ✅ Autenticación de usuarios (Login/Registro)
+- ✅ Visualización de clases destacadas
+- ✅ Lista de clases disponibles con filtros
+- ✅ Sistema de reservas
+- ✅ Perfil de usuario
+- ✅ Notificaciones Toast
+- ✅ Progreso del usuario

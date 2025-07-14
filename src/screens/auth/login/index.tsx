@@ -114,7 +114,7 @@ export const Login: React.FC<AppRouterScreenProps<'Login'>> = ({
             </TouchableOpacity>
 
             <View style={styles.signUpContainer}>
-              <Text style={styles.signUpText}>¿No tienes cuenta? </Text>
+              {/*<Text style={styles.signUpText}>¿No tienes cuenta? </Text>*/}
               <TouchableOpacity
                 onPress={() => navigation.navigate('Register')}
                 activeOpacity={0.7}
