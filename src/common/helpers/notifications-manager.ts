@@ -10,6 +10,10 @@ import {
   PermissionsAndroid,
   Platform,
 } from 'react-native';
+import notifee, {
+  AndroidColor,
+  AndroidImportance,
+} from '@notifee/react-native';
 
 export const getFCMToken = async () => {
   const fcmToken = await messaging().getToken();
@@ -36,17 +40,28 @@ export const useListenNotification = () => {
   const [channelId, setChannelId] = useState('');
   const unsubscribeRef = useRef<(() => void) | null>(null);
   const addNotification = useNotificationsStore(state => state.addNotification);
+
   const listenToBackgroundNotifications = async () => {
     const unsubscribe = messaging().setBackgroundMessageHandler(
       async (remoteMessage: FirebaseMessagingTypes.RemoteMessage) => {
         try {
           const { notification } = remoteMessage;
-          const newNotification: Notification = {
+          const newNotification = {
             body: notification?.body || '',
             title: notification?.title || '',
             timestamp: new Date(),
             read: false,
           };
+          await notifee.displayNotification({
+            title: notification?.title,
+            body: notification?.body,
+            android: {
+              channelId,
+              pressAction: {
+                id: 'default',
+              },
+            },
+          });
 
           addNotification(newNotification);
         } catch (error) {
@@ -63,12 +78,22 @@ export const useListenNotification = () => {
         try {
           const { notification } = remoteMessage;
 
-          const newNotification: Notification = {
+          const newNotification = {
             body: notification?.body || '',
             title: notification?.title || '',
             timestamp: new Date(),
             read: false,
           };
+          await notifee.displayNotification({
+            title: notification?.title,
+            body: notification?.body,
+            android: {
+              channelId,
+              pressAction: {
+                id: 'default',
+              },
+            },
+          });
 
           addNotification(newNotification);
         } catch (error) {
@@ -91,14 +116,14 @@ export const useListenNotification = () => {
 
   useEffect(() => {
     const getChannelId = async () => {
-      //   await notifee.createChannel({
-      //     id: 'general',
-      //     name: 'Fondo del Ojo App',
-      //     sound: 'notifications',
-      //     vibration: true,
-      //     lightColor: AndroidColor.AQUA,
-      //     importance: AndroidImportance.HIGH,
-      //   });
+      await notifee.createChannel({
+        id: 'general',
+        name: 'Fitzone',
+        sound: 'notifications',
+        vibration: true,
+        lightColor: AndroidColor.AQUA,
+        importance: AndroidImportance.HIGH,
+      });
 
       setChannelId('general');
     };

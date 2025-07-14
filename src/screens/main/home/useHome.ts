@@ -2,8 +2,12 @@
 import { ToastContext, useUserStore } from '../../../common/store';
 import { Alert } from 'react-native';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
-import { useQueries } from '@tanstack/react-query';
-import { classActions, UserActions } from '../../../actions';
+import { useMutation, useQueries } from '@tanstack/react-query';
+import {
+  classActions,
+  notificationActions,
+  UserActions,
+} from '../../../actions';
 import { useContext, useEffect } from 'react';
 import { useErrorsToken } from '../../../common/helpers';
 
@@ -37,6 +41,10 @@ export const useHome = (
       },
     ],
   });
+  const mutation = useMutation({
+    mutationKey: ['test-notifications'],
+    mutationFn: () => notificationActions.notificationsTest(),
+  });
   const userName = useUserStore(state => state.user.name);
   const { showToast } = useContext(ToastContext);
   const { validateError } = useErrorsToken();
@@ -68,5 +76,6 @@ export const useHome = (
     myProgress: myProgress.data,
     userName,
     handleQuickAction,
+    onTestNotifications: mutation.mutate,
   };
 };
