@@ -46,7 +46,7 @@ export const TabNavigatorMain = () => {
           borderRadius: 16,
           height: 55,
           position: 'absolute',
-          bottom,
+          bottom: bottom + 10,
           left: 10,
           right: 10,
           marginHorizontal: 10,

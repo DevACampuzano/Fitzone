@@ -50,6 +50,7 @@ export const useRegister = ({
   const { showToast } = useContext(ToastContext);
 
   const mutation = useMutation({
+    mutationKey: ['register'],
     mutationFn: (data: FormDataRegister) => UserActions.register(data),
     onMutate: async () => {
       const result = Object.keys(validators).filter(key =>

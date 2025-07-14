@@ -1,6 +1,6 @@
 interface CardClassProps {
-  onPress: (id: string | number) => void;
-  id: string | number;
+  onPress: (id: number) => void;
+  id: number;
   image: string;
   name: string;
   difficulty: 'Principiante' | 'Intermedio' | 'Avanzado';
