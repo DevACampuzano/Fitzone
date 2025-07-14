@@ -13,7 +13,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import useClassDetail from './useClassDetail';
 import { DetailsItem, ListItem, Loading, NotResult, Tag } from './components';
 import styles from './sytles';
-import { getDifficultyColor } from '../../../common/helpers/get-difficulty-color';
+import { getDifficultyColor } from '../../../common/helpers';
 import { Toast } from '../../../common/components';
 
 export const ClassDetail: React.FC<ClassRouterScreenProps<'ClassDetail'>> = ({

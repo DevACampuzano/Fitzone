@@ -1,9 +1,10 @@
 import { useState, useContext } from 'react';
 import { useForm } from '../../../common/hooks';
 import { ToastContext, useUserStore } from '../../../common/store';
-import { UserActions } from '../../../actions';
+import { notificationActions, UserActions } from '../../../actions';
 import { useMutation } from '@tanstack/react-query';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { handleCheckNotifications, getFCMToken } from '../../../common/helpers';
 
 interface FormData {
   email: string;
@@ -23,6 +24,15 @@ export const useLogin = (
   const { showToast } = useContext(ToastContext);
   const saveUser = useUserStore(state => state.setUser);
   const saveToken = useUserStore(state => state.setToken);
+
+  const mutationNotifications = useMutation({
+    mutationKey: ['add-fcm-token'],
+    mutationFn: (token: string) => notificationActions.addFCMToken(token),
+    onError: (error: Error) => {
+      showToast(error.message, 'warning-sharp');
+    },
+  });
+
   const mutation = useMutation({
     mutationKey: ['login'],
     mutationFn: ({ email: loginEmail, password: loginPassword }: FormData) =>
@@ -36,11 +46,19 @@ export const useLogin = (
     onError: (error: Error) => {
       showToast(error.message, 'warning-sharp');
     },
-    onSuccess: ({ data: { data, status } }) => {
+    onSuccess: async ({ data: { data, status } }) => {
       if (status) {
         showToast('Inicio de sesión exitoso', 'checkmark-circle-outline');
         saveUser(data.user);
         saveToken(data.token);
+        const check = await handleCheckNotifications();
+        if (check) {
+          const token = await getFCMToken();
+          if (token) {
+            console.log('FCM Token:', token);
+            await mutationNotifications.mutateAsync(token);
+          }
+        }
         navigation.reset({
           index: 0,
           routes: [{ name: 'Main' as never }],

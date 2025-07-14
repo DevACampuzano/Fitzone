@@ -1,10 +1,8 @@
 interface NotificationsStoreState {
   notifications: Notification[];
-  statusPermission: PermissionStatus;
   isLoading: boolean;
 }
 interface Notification {
-  id: string;
   title: string;
   body: string;
   timestamp: Date;
@@ -14,9 +12,8 @@ interface Notification {
 interface NotificationsStoreActions {
   addNotification: (notification: Notification) => void;
   getNotifications: () => Notification[];
-  removeNotification: (id: string) => void;
+  removeNotification: (id: number) => void;
   clearNotifications: () => void;
-  setStatusPermission: (status: 'granted' | 'denied' | 'default') => void;
   setLoading: (isLoading: boolean) => void;
 }
 
