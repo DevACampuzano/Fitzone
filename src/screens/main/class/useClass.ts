@@ -17,12 +17,13 @@ export const useClass = () => {
   const { validateError } = useErrorsToken();
 
   const [
+    { error: errorCategories, data: dataCategories },
     {
-      error: errorCategories,
-      data: dataCategories,
-      isLoading: isLoadingCategories, // eslint-disable-line @typescript-eslint/no-unused-vars
+      data: dataClasses,
+      error: errorClasses,
+      isLoading: isLoadingClasses,
+      refetch: refetchClasses,
     },
-    { data: dataClasses, error: errorClasses, isLoading: isLoadingClasses },
   ] = useQueries({
     queries: [
       {
@@ -90,5 +91,7 @@ export const useClass = () => {
     searchText,
     setSearchText,
     categories: allCategories,
+    refetchClasses,
+    isLoadingClasses,
   };
 };

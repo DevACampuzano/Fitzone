@@ -11,7 +11,7 @@ interface FormData {
 }
 
 const initialState: FormData = {
-  email: 'a@a.c',
+  email: 'andres@gmail.com',
   password: '1234',
 };
 
@@ -24,6 +24,7 @@ export const useLogin = (
   const saveUser = useUserStore(state => state.setUser);
   const saveToken = useUserStore(state => state.setToken);
   const mutation = useMutation({
+    mutationKey: ['login'],
     mutationFn: ({ email: loginEmail, password: loginPassword }: FormData) =>
       UserActions.login(loginEmail, loginPassword),
     onMutate: () => {

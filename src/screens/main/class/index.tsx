@@ -3,6 +3,7 @@ import React from 'react';
 import {
   FlatList,
   Keyboard,
+  RefreshControl,
   ScrollView,
   StyleSheet,
   Text,
@@ -27,6 +28,8 @@ export const Class: React.FC<ClassRouterScreenProps<'list'>> = ({
     searchText,
     setSearchText,
     categories,
+    refetchClasses,
+    isLoadingClasses,
   } = useClass();
 
   return (
@@ -68,6 +71,12 @@ export const Class: React.FC<ClassRouterScreenProps<'list'>> = ({
         <ScrollView
           style={styles.classesList}
           showsVerticalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl
+              refreshing={isLoadingClasses}
+              onRefresh={refetchClasses}
+            />
+          }
         >
           {filteredClasses.map(classItem => (
             <CardClass
