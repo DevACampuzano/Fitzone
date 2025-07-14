@@ -101,3 +101,12 @@ bun ios
 - ✅ Perfil de usuario
 - ✅ Notificaciones Toast
 - ✅ Progreso del usuario
+
+## 🗺️ Roadmap
+
+### Próximas Funcionalidades (v1.1)
+
+- 🔄 Integración con pasarelas de pago
+- 🔄 Dashboard administrativo
+- 🔄 Reportes y analytics
+- 🔄 Sistema de membresías
