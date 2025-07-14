@@ -57,6 +57,9 @@ export const useListenNotification = () => {
             body: notification?.body,
             android: {
               channelId,
+              pressAction: {
+                id: 'default',
+              },
             },
           });
 
@@ -86,6 +89,9 @@ export const useListenNotification = () => {
             body: notification?.body,
             android: {
               channelId,
+              pressAction: {
+                id: 'default',
+              },
             },
           });
 

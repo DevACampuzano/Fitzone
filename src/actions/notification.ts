@@ -6,6 +6,11 @@ const addFCMToken = async (token: string) => {
     .then(response => response.data);
 };
 
+const notificationsTest = async () => {
+  return await backendApi.get('/notifications').then(response => response.data);
+};
+
 export const notificationActions = {
   addFCMToken,
+  notificationsTest,
 };

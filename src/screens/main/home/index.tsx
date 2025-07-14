@@ -27,7 +27,7 @@ export const Home: React.FC<TabNavigatorMainScreenProps<'Home'>> = ({
     myProgress,
     userName,
     handleQuickAction,
-    handelListNotifications,
+    onTestNotifications,
   } = useHome(navigation);
 
   return (
@@ -40,7 +40,7 @@ export const Home: React.FC<TabNavigatorMainScreenProps<'Home'>> = ({
         <TouchableOpacity
           style={styles.notificationButton}
           activeOpacity={0.7}
-          onPress={handelListNotifications}
+          onPress={() => onTestNotifications()}
         >
           <Icon name="notifications-outline" size={24} color="#333" />
         </TouchableOpacity>
