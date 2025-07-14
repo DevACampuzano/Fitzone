@@ -55,7 +55,6 @@ export const useLogin = (
         if (check) {
           const token = await getFCMToken();
           if (token) {
-            console.log('FCM Token:', token);
             await mutationNotifications.mutateAsync(token);
           }
         }
