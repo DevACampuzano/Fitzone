@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyCFxTv4tuc49TWX5LyB8eq4_wJX2X_R0vY</string>
+	<key>GCM_SENDER_ID</key>
+	<string>187378962337</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.fitzone</string>
+	<key>PROJECT_ID</key>
+	<string>fitzone-9ae2c</string>
+	<key>STORAGE_BUCKET</key>
+	<string>fitzone-9ae2c.firebasestorage.app</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:187378962337:ios:91a5ae7284b86f22eb05e0</string>
+</dict>
+</plist>
